@@ -42,6 +42,14 @@
 
     <!-- 任务2定时清理一个月之前的预约配置 -->
     <bean id="clearOldInfoJob" class="com.itheima.job.ClearOldInfo"></bean>
+
+    <!-- 指定应用名称 -->
+    <dubbo:application name="health_service"/>
+    <!--指定服务注册中心地址-->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+    <!--批量扫描，发布服务-->
+    <dubbo:annotation package="com.itheima.job"/>
+
     <bean id="jobDetail_2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
             <ref bean="clearOldInfoJob" />
