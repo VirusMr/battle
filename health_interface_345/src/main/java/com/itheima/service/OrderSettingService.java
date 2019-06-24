@@ -11,4 +11,6 @@ public interface OrderSettingService {
     void addOrderSettings(List<OrderSetting> orderSettingList);
 
     List<OrderSetting> findByMonth(String month);
+
+    void ClearOldInfo();
 }

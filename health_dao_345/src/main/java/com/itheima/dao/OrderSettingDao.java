@@ -18,4 +18,7 @@ public interface OrderSettingDao {
     void add(OrderSetting orderSetting);
 
     List<OrderSetting> findByMonth(String beginDate, String endDate);
+
+    //清理上月及之前的预约数据
+    void clearOldInfo(String lastMonthTime);
 }

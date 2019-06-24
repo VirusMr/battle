@@ -19,6 +19,7 @@
     <bean id="jobDemo" class="com.itheima.job.ClearImgJob">
         <property name="jedisPool" ref="jedisPool"></property>
     </bean>
+
     <!-- 注册JobDetail,作用是负责通过反射调用指定的Job -->
     <bean id="jobDetail"
           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -37,12 +38,35 @@
             <!--<value>1-50 * * * * ?</value>-->
         </property>
     </bean>
+
+
+    <!-- 任务2定时清理一个月之前的预约配置 -->
+    <bean id="clearOldInfoJob" class="com.itheima.job.ClearOldInfo"></bean>
+    <bean id="jobDetail_2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="clearOldInfoJob" />
+        </property>
+        <property name="targetMethod">
+            <value>clearOldInfo</value>
+        </property>
+    </bean>
+    <bean id="myTrigger_2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="jobDetail_2" />
+        </property>
+        <property name="cronExpression">
+            <!--<value>*/5 * * * * ?</value>-->
+            <value>0 0 2 L * ?</value>
+        </property>
+    </bean>
+
     <!-- 注册一个统一的调度工厂，通过这个调度工厂调度任务 -->
     <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <!-- 注入多个触发器 -->
         <property name="triggers">
             <list>
                 <ref bean="myTrigger"/>
+                <ref bean="myTrigger_2"/>
             </list>
         </property>
     </bean>
