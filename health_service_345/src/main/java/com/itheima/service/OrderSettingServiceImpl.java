@@ -23,26 +23,6 @@ public class OrderSettingServiceImpl implements OrderSettingService {
     @Autowired
     OrderSettingDao orderSettingDao;
 
-
-    /*
-    定时清理历史数据
-    清理一个月之前的预约数据
-     */
-    @Override
-    public void ClearOldInfo() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        //获取当前时间
-        Date currentDate = new Date();
-        Calendar calendar= Calendar.getInstance();
-        calendar.setTime(currentDate);
-        calendar.set(Calendar.MONTH,calendar.get(Calendar.MONTH)-1);
-        //获取上月时间
-        Date date = calendar.getTime();
-        String time = simpleDateFormat.format(date);
-
-        orderSettingDao.clearOldInfo(time);
-    }
-
     /**
      * 1. 遍历集合添加预约设置对象
      * 2. 查询该日期是否已经预约，如果已经设置预约，执行更新操作， 如果没有设置预约执行添加操作
