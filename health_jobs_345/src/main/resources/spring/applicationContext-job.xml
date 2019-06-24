@@ -56,8 +56,8 @@
             <ref bean="jobDetail_2" />
         </property>
         <property name="cronExpression">
-            <!--<value>*/5 * * * * ?</value>-->
-            <value>0 0 2 L * ?</value>
+            <value>*/5 * * * * ?</value>
+            <!--<value>0 0 2 L * ?</value>-->
         </property>
     </bean>
 

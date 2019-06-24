@@ -2,6 +2,8 @@ package com.itheima.job;
 
 import com.itheima.dao.OrderSettingDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,6 +15,8 @@ import java.util.Date;
  * @description ：
  * @version: 1.0
  */
+@Service
+@Transactional
 public class ClearOldInfo {
 
     @Autowired
@@ -28,7 +32,6 @@ public class ClearOldInfo {
         //获取上月时间
         Date date = calendar.getTime();
         String time = simpleDateFormat.format(date);
-
         orderSettingDao.clearOldInfo(time);
     }
 }
