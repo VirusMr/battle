@@ -341,13 +341,14 @@
                             message: res.data.message,
                             type: res.data.flag ? "success" : "error"
                         });
+                        this.findPage();
                     }).catch((err) => {
                         console.log(err);
                     })
                 }).catch(() => {
                     this.$message.error("您已取消删除!");
                 }).finally(() => {
-                    this.findPage();
+
                 })
             }
         }

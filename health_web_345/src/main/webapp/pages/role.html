@@ -429,7 +429,7 @@
             },
             // 删除
             handleDelete(row) {
-                this.$confirm("您确定要删除本条检查组吗", "提示").then(() => {
+                this.$confirm("您确定要删除此角色吗", "提示").then(() => {
                     axios.get("/role/delById.do?id=" + row.id).then((res) => {
                         this.$message({
                             message: res.data.message,

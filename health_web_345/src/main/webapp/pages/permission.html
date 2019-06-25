@@ -247,7 +247,7 @@
                 },
                 // 删除
                 handleDelete(row) {
-                    this.$confirm("是否确认删除本条检查项","提示").then(()=>{
+                    this.$confirm("是否确认删除本条权限","提示").then(()=>{
 
                         axios.get("/permission/delById.do?id="+row.id).then((res)=>{
                             if(res.data.flag){
