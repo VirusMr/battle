@@ -31,4 +31,69 @@
     </select>
 
 
+    <insert id="add" parameterType="sysUser">
+        -- 主键的回显
+        <selectKey resultType="int" keyColumn="id" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        INSERT INTO `t_user`
+        (`birthday`, `gender`, `username`, `remark`, `station`, `telephone`)
+        VALUES (#{birthday},#{gender},#{username},#{remark},#{station},#{telephone})
+    </insert>
+
+
+    <insert id="insert">
+        INSERT INTO `t_user_role`
+        (`user_id`, `role_id`) VALUES (#{userId}, #{roleId})
+    </insert>
+
+
+    <select id="findByCondition" parameterType="string" resultType="sysUser">
+        select * from t_user
+        <if test="value != null and value.length > 0">
+            where username = #{username} or telephone = #{telephone}
+        </if>
+    </select>
+
+    <select id="findById" parameterType="int" resultType="sysUser">
+        select * from t_user where id = #{id}
+    </select>
+
+    <select id="findRoleIdsById" parameterType="int" resultType="int">
+        select role_id from t_user_role where user_id = #{id}
+    </select>
+
+    <update id="edit" parameterType="sysUser">
+        update t_user
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="station != null">
+                station = #{station},
+            </if>
+            <if test="remark != null">
+                telephone = #{telephone},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAssociation" parameterType="int">
+        delete from t_user_role where user_id = #{id}
+    </delete>
+
+    <delete id="delById" parameterType="int">
+        delete from t_user where id = #{id}
+    </delete>
+
 </mapper>

@@ -16,16 +16,17 @@
     .el-main{
         position: absolute;
         top: 70px;
-        bottom: 100px;
+        bottom: 0px;
         left: 200px;
         right: 10px;
         padding: 0;
     }
     </style>
+
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
-<div id="app">
-    <el-container>
+    <div id="app">
+        <el-container>
             <el-header  class="main-header" style="height:70px;">
                 <nav class="navbar navbar-static-top" :class=''>
                     <!-- Logo -->
@@ -45,7 +46,7 @@
                                 </el-dropdown-item>
                                 <el-dropdown-item divided>
                                         <span style="display:block;">
-                                                <a href="/logout.do">退出</a></span>
+                                            <a href="/logout.do">退出</a></span>
                                     </el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
@@ -69,22 +70,22 @@
                     </el-menu>
                 </el-aside>
                 <el-container>
-                    <iframe name="right" class="el-main" src="ordersetting.html" width="100%" height="780px" frameborder="0"></iframe>
+                    <iframe name="right" class="el-main" src="/pages/checkitem.html" width="100%" height="650px" frameborder="0"></iframe>
                 </el-container>
             </el-container>
         </el-container>
-</div>
+    </div>
 </body>
 <!-- 引入组件库 -->
 <script src="../js/vue.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
 <script src="../plugins/elementui/index.js"></script>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
-<script src="../js/axios-0.18.0.js"></script>
 <script>
     new Vue({
         el: '#app',
         data:{
-            username:"",
+            username: "",
             menuList:[
                 {
                     "path": "1",
@@ -124,7 +125,7 @@
                         {
                             "path": "/3-1",
                             "title": "预约列表",
-                            "linkUrl":"/pages/ordersettinglist.html",
+                            "linkUrl":"ordersettinglist.html",
                             "children":[]
                         },
                         {
@@ -172,44 +173,39 @@
                     "icon":"fa-heartbeat",
                     "children":[//是否有子菜单，若没有，则为[]
                         {
-                            "path": "/5-5",
-                            "title": "工作量统计",
-                            "linkUrl":"all-medical-list.html",
-                            "children":[]
+                            "path": "/5-1",
+                            "title": "会员数据统计",
+                            "linkUrl": "/pages/report_member.html",
+                            "children": []
                         },
                         {
                             "path": "/5-2",
-                            "title": "运营数据",
-                            "linkUrl":"/pages/report_business.html",
-                            "children":[]
+                            "title": "套餐占比",
+                            "linkUrl": "/pages/report_setmeal.html",
+                            "children": []
+                        },{
+                            "path": "/5-3",
+                            "title": "运营数据统计",
+                            "linkUrl": "/pages/report_business.html",
+                            "children": []
                         },
                         {
-                            "path": "/5-3",
-                            "title": "套餐占比",
-                            "linkUrl":"/pages/report_setmeal.html",
-                            "children":[]
-                        },{
-                            "path": "/5-1",
-                            "title": "会员量统计",
-                            "linkUrl":"/pages/report_member.html",
-                            "children":[]
-                        },{
-                            "path": "/5-4",
-                            "title": "会员量占比(按性别,年龄)",
-                            "linkUrl":"/pages/report_sexage.html",
+                            "path": "/5-5",
+                            "title": "工作量统计",
+                            "linkUrl":"all-medical-list.html",
                             "children":[]
                         }
                     ]
                 }
             ]
         },methods:{
-           getUsername(){
-             axios.get("/user/getUsername.do").then((res)=>{
-                 this.username = res.data.data;
-             })
-           }
+            getUsername(){
+                axios.get("/user/getUsername.do").then((res)=>{
+                    this.username = res.data.data;
+                })
+            }
         },
-        created:function () {
+        created: function(){
             this.getUsername();
         }
     });

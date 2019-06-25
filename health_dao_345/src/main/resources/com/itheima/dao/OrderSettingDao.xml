@@ -4,6 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itheima.dao.OrderSettingDao">
 
+    <!--清理上月之前数据-->
+    <delete id="clearOldInfo" parameterType="String">
+        DELETE FROM t_ordersetting WHERE orderDate &lt; #{lastMonthTime}
+    </delete>
+
     <select id="findByOrderDate" parameterType="date" resultType="orderSetting">
         select * from t_ordersetting where orderDate = #{date}
     </select>

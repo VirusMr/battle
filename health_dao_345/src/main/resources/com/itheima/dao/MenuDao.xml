@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.MenuDao">
+    <!--select * from t_menu where parentMenuId is NULL-->
+    <select id="findAll" resultType="menu">
+        select * from t_menu
+    </select>
+
+    <select id="findByCondition" parameterType="com.itheima.entity.QueryPageBean" resultType="menu">
+        select * from t_menu where 1=1
+        <if test="queryString != null and queryString.length > 0">
+            and name = #{queryString}
+        </if>
+        <if test="parentId != null">
+            and parentMenuId = #{parentId}
+        </if>
+        <if test="parentId == null">
+            and parentMenuId is null
+        </if>
+    </select>
+
+    <insert id="add" parameterType="menu">
+        <selectKey resultType="int" keyColumn="id" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        INSERT INTO `t_menu`
+        ( `name`, `linkUrl`, `path`, `priority`, `icon`, `description`, `parentMenuId`)
+        VALUES (#{name},#{linkUrl},#{path},#{priority},#{icon},#{description},#{parentMenuId})
+    </insert>
+
+    <select id="findById" parameterType="int" resultType="menu">
+        select * from t_menu where id = #{id}
+    </select>
+
+    <update id="edit" parameterType="menu">
+        update t_menu
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+
+            <if test="linkUrl != null">
+                linkUrl = #{linkUrl},
+            </if>
+
+            <if test="path != null">
+                path = #{path},
+            </if>
+
+            <if test="priority != null">
+                priority = #{priority},
+            </if>
+
+            <if test="icon != null">
+                icon = #{icon},
+            </if>
+
+            <if test="description != null">
+                description = #{description},
+            </if>
+
+            <if test="parentMenuId != null">
+                parentMenuId = #{parentMenuId}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findRoleAndMenu" parameterType="int" resultType="int">
+        select count(1) from t_role_menu where menu_id = #{id}
+    </select>
+
+    <delete id="delById" parameterType="int">
+        delete from t_menu where id = #{id}
+    </delete>
+</mapper>
