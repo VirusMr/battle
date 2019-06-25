@@ -19,5 +19,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public SysUser findByUsername(String username) {
         return userDao.findByUsername(username);
-}
+    }
 }
