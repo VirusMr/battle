@@ -9,14 +9,14 @@
     </select>
 
     <insert id="reg" parameterType="member">
-      <selectKey resultType="int" order="AFTER" keyColumn="id" keyProperty="id">
-          select last_insert_id()
-      </selectKey>
-        INSERT INTO  `t_member`
+        <selectKey resultType="int" order="AFTER" keyColumn="id" keyProperty="id">
+            select last_insert_id()
+        </selectKey>
+        INSERT INTO `t_member`
         ( `name`, `sex`, `idCard`, `phoneNumber`, `regTime`)
         VALUES
         (#{name}, #{sex}, #{idCard}, #{phoneNumber}, #{regTime})
-     </insert>
+    </insert>
 
     <select id="findMemberCountByBeforeMonth" resultType="int" parameterType="string">
         select count(1) from t_member where regTime &lt;= #{date}
@@ -32,5 +32,36 @@
     <select id="findMemberCountByAfterDate" resultType="long" parameterType="string">
         select count(1) from t_member where regTime &gt;= #{date}
     </select>
+    <select id="findSex" resultType="map">
 
+
+SELECT COUNT(sex)value,CASE WHEN sex = 1 THEN '男' WHEN sex = 2 THEN '女' ELSE '不限' END AS name FROM t_member GROUP BY sex
+
+
+    </select>
+    <select id="findAge" resultType="map">
+       SELECT CASE
+              WHEN ages.age  &lt;= 18 THEN
+             '0-18岁'
+             WHEN ages.age &gt; 18
+             AND ages.age  &lt;= 30 THEN
+             '18-30岁'
+             WHEN ages.age  &gt; 30 THEN
+             '30岁及以上'
+             END AS name,
+             COUNT(*) AS value
+             FROM
+             (SELECT (YEAR(CURDATE())-YEAR(birthday))AS age FROM t_member)AS ages
+             GROUP BY
+             CASE
+             WHEN ages.age  &lt;= 18 THEN
+             '0-18岁'
+             WHEN ages.age  &gt; 18
+             AND ages.age  &lt;= 30 THEN
+             '18-30岁'
+             WHEN ages.age  &gt; 30 THEN
+             '30岁及以上'
+             END
+
+    </select>
 </mapper>

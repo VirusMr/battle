@@ -216,8 +216,60 @@ public class ReportController {
         }
     }
 
+    /**
+     * 按性别查询会员数据
+     * @return
+     */
+    @RequestMapping("/findSex")
+    public Result findSex(){
+        try {
+            List<Map<String,String>>  setmealCount = memberService.findSex();
 
+            Map<String, Object> map = new HashMap<>();
+            //把所有的套餐名称存储到一个list集合中
+            List<String> setmealNames = new ArrayList<>();
+            for (Map<String, String> setmeal : setmealCount) {
+                String sex = setmeal.get("name");
+                System.out.println(sex);
+                setmealNames.add(sex);
+            }
 
+            map.put("setmealCount",setmealCount);
+            map.put("setmealNames",setmealNames);
+
+            return new Result(true,MessageConstant.GET_SETMEAL_COUNT_REPORT_SUCCESS, map );
+        } catch (Exception e){
+            e.printStackTrace();
+            return new Result(false,MessageConstant.GET_SETMEAL_COUNT_REPORT_FAIL);
+        }
+    }
+    /**
+     * 按性别查询会员数据
+     * @return
+     */
+    @RequestMapping("/findAge")
+    public Result findAge(){
+        try {
+            List<Map<String,String>>  setmealCount = memberService.findAge();
+
+            Map<String, Object> map = new HashMap<>();
+            //把所有的套餐名称存储到一个list集合中
+            List<String> setmealNames = new ArrayList<>();
+            for (Map<String, String> setmeal : setmealCount) {
+                String sex = setmeal.get("name");
+                System.out.println(sex);
+                setmealNames.add(sex);
+            }
+
+            map.put("setmealCount",setmealCount);
+            map.put("setmealNames",setmealNames);
+
+            return new Result(true,MessageConstant.GET_SETMEAL_COUNT_REPORT_SUCCESS, map );
+        } catch (Exception e){
+            e.printStackTrace();
+            return new Result(false,MessageConstant.GET_SETMEAL_COUNT_REPORT_FAIL);
+        }
+    }
     /**
      * 查询套餐统计数据
      *  Map<String,Object>

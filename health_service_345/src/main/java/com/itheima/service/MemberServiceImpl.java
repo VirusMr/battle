@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 黑马程序员
@@ -48,5 +49,20 @@ public class MemberServiceImpl implements MemberService {
             memberCount.add(count);
         }
         return memberCount;
+    }
+
+    /**
+     *
+     * @para
+     * @return
+     */
+    @Override
+    public List<Map<String, String>> findSex() {
+        return memberDao.findSex();
+    }
+
+    @Override
+    public List<Map<String, String>> findAge() {
+        return memberDao.findAge();
     }
 }

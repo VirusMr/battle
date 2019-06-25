@@ -2,6 +2,9 @@ package com.itheima.dao;
 
 import com.itheima.pojo.Member;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author 黑马程序员
  * @Company http://www.ithiema.com
@@ -33,4 +36,9 @@ public interface MemberDao {
      * @return
      */
     long findMemberCountByAfterDate(String date);
+
+    List<Map<String, String>> findSex();
+
+    List<Map<String, String>> findAge();
+
 }
