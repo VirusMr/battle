@@ -7,6 +7,7 @@ public class QueryPageBean implements Serializable{
     private Integer currentPage;//页码
     private Integer pageSize;//每页记录数
     private String queryString;//查询条件
+    private Integer parentId;
     public Integer getCurrentPage() {
         return currentPage;
     }
@@ -25,4 +26,11 @@ public class QueryPageBean implements Serializable{
     public void setQueryString(String queryString) {
         this.queryString = queryString;
     }
+    public Integer getParentId() {
+        return parentId;
+    }
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
 }

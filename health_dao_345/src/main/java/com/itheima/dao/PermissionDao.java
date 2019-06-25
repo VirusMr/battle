@@ -1,7 +1,9 @@
 package com.itheima.dao;
 
+import com.github.pagehelper.Page;
 import com.itheima.pojo.Permission;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -12,4 +14,18 @@ import java.util.Set;
 public interface PermissionDao {
 
     public Set<Permission> findPermissionsByRoleId(Integer roleId);
+
+    void add(Permission permission);
+
+    Page<Permission> queryPage(String queryString);
+
+    void edit(Permission permission);
+
+    Permission findById(Integer id);
+
+    int findByCheckItemId(Integer id);
+
+    void delById(Integer id);
+
+    List<Permission> findAll();
 }

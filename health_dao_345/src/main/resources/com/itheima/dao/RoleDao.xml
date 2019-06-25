@@ -23,4 +23,89 @@
         select * from t_role where id in (select role_id from t_user_role where user_id = #{id})
      </select>
 
+    <select id="findAll" resultType="role">
+        select * from t_role
+    </select>
+
+    <insert id="add" parameterType="role">
+        -- 主键的回显
+        <selectKey resultType="int" keyColumn="id" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        INSERT INTO `t_role`
+        (`name`, `keyword`, `description`)
+        VALUES (#{name},#{keyword},#{description})
+    </insert>
+
+    <insert id="insertRoleAndPermisson">
+        INSERT INTO `t_role_permission`
+        (`role_id`, `permission_id`) VALUES (#{roleId}, #{permissionId})
+    </insert>
+
+    <insert id="insertRoleAndMenu">
+        INSERT INTO `t_role_menu`
+        (`role_id`, `menu_id`) VALUES (#{roleId}, #{menuId})
+    </insert>
+
+    <select id="findByCondition" parameterType="string" resultType="role">
+        select * from t_role
+        <if test="value != null and value.length > 0">
+            where name = #{name} or keyword = #{keyword}
+        </if>
+    </select>
+
+    <select id="findById" parameterType="int" resultType="role">
+        select * from t_role where id = #{id}
+    </select>
+
+    <select id="findPermissionIdsById" parameterType="int" resultType="int">
+        select permission_id from t_role_permission where role_id = #{id}
+    </select>
+
+    <select id="findMenuIdsById" parameterType="int" resultType="int">
+        select menu_id from t_role_menu where role_id = #{id}
+    </select>
+
+
+    <update id="edit" parameterType="role">
+        update t_role
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="keyword != null">
+                keyword = #{keyword},
+            </if>
+            <if test="description != null">
+                description = #{description}
+            </if>
+        </set>
+        where id = #{id}
+
+    </update>
+
+    <delete id="deleteRoleAndPermisson" parameterType="int">
+        delete from t_role_permission where role_id = #{id}
+    </delete>
+
+    <delete id="deleteRoleAndMenu" parameterType="int">
+        delete from t_role_menu where role_id = #{id}
+    </delete>
+
+    <select id="findUserAndRoleCountById" parameterType="int" resultType="int">
+        select count(1) from t_user_role where role_id = #{id}
+    </select>
+
+    <delete id="deletePermissonAssociation" parameterType="int">
+        delete from t_role_permission where role_id = #{id}
+    </delete>
+
+    <delete id="deleteMenuAssociation" parameterType="int">
+        delete from t_role_menu where role_id = #{id}
+    </delete>
+
+    <delete id="delById" parameterType="int">
+        delete from t_role where id = #{id}
+    </delete>
+
 </mapper>
